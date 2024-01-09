@@ -1,0 +1,534 @@
+import java.beans.Statement;
+import java.io.IOException;
+import java.rmi.server.ServerCloneException;
+
+import com.sun.java.accessibility.util.Translator;
+import com.sun.org.apache.xerces.internal.util.EncodingMap;
+import com.sun.org.apache.xerces.internal.util.URI;
+
+/*
+Name	Last commit message	Last commit date
+parent directory
+..
+4.객체 지향 프로그래밍.pdf
+오늘부터 쌓아야 할 스택
+2 days ago
+JDBC.pdf
+오늘부터 쌓아야 할 스택
+2 days ago
+Java Servlet.pdf
+오늘부터 쌓아야 할 스택
+2 days ago
+Java-Design-Patterns.pdf
+오늘부터 쌓아야 할 스택
+2 days ago
+Spring-5.pdf
+오늘부터 쌓아야 할 스택
+2 days ago
+object-oriented-programming-using-java.pdf
+오늘부터 쌓아야 할 스택
+2 days ago
+oop_java.pdf
+오늘부터 쌓아야 할 스택
+2 days ago
+spring-framework.pdf
+오늘부터 쌓아야 할 스택
+2 days ago
+spring-reference.pdf*/
+
+//Part 1 Web application development
+
+public class SimpleHttpServlet extends HttpSerlvet {
+
+  protected void service(HttpServletRequest req, HttpServletResponse res)
+      throws ServletException, IOException {
+
+    res.setContentType("text/html");
+    PrintWriter out = res.getWriter();
+    out.println("<HTML><TITLE>SimpleHttpServlet</TITLE><BODY>");
+    out.println("<H2>Servlet API Example - SimpleHttpServlet</H2><HR>");
+    out.println("<H4>This is about as simple a servlet as it gets!</H4>");
+    out.println("</BODY><HTML>");
+    out.close();
+  }
+
+}
+
+  //
+  public void init(ServletConfig config) throws ServletException {
+    super.init(config);
+    System.out.println("in the init() method of HTMLFormGenerator");
+  }
+
+public void doGet(HttpServletRequest req, HttpServletResponse res) 
+                            throws ServletException, IOException {
+
+  performTask(req, res, "POST",
+             "itso.servjsp.servletapi.HTMLFormHandler");
+              "/itsoservjsp/servlet/itso.servjsp.servletapi.HTMLFormHandler");
+}
+
+public void perfornTask(HttpServletRequest req, HttpServletResponse res,
+                        String method, String url) throws ServletException, IOException {
+  res.setContentType("text/html");
+  PrintWriter out = res.getWriter();
+  out.println("<HTML><TITLE>HTMLFormGenerator</TITLE><BODY>");
+  out.println("<H2>Servlet API Example - HTMLCreatingServlet</H2><HR>");
+  out.println("<FORM METHOD=\"" + method + "\" ACTION=\"" + url + "\">");  
+  out.println("<B>Enter your name:</B> ");
+  out.println("<INPUT TYPE=TEXT NAME=firstname><BR>");
+  out.println("<B>Select your title: </B> ");
+  out.println("SELECT NAME=title>");
+  out.println("  <OPTION VALUE=\"Web Developer\">Web Developer");
+  out.println("  <OPTION VALUE=\"Web Architect\">Web Architect");
+  out.println("  <OPTION VALUE=\"Other\">Other");
+  out.println("</SELECT><BR>");
+  out.println("<B>Which tools do you have experience with:</B><BR> ");
+  out.println("<INPUT TYPE=checkbox NAME=\"tools\"
+              VALUE=\"WebSphere Application Server\">WebSphere Application Server<BR>");
+  out.println("<INPUT TYPE=checkbox NAME=\"tools\"
+  VALUE = \"WebSphere Stdio\">WebSphere Stdio<BR>");
+  
+    out.println("<INPUT TYPE=checkbox NAME=\"tools\"
+      VALUE = \"VisualAge for Java\">VisualAge for Java<BR>");
+  out.println("<INPUT TYPE=checkbox NAME=\"tools\"
+              VALUE =\"IBM Http Web Server\"> IBM Http Web Server<BR>");
+  out.println("<INPUT TYPE=checkbox NAME=\"tools\" VALUE=\"DB2 UDB\"> DB2 UDB<BR>");
+  out.println("<INPUT TYPE=\"SUBMIT\" NAME=\"SENDPOST\" NAME=\"SENDPOST\">");
+  out.println("<\FORM>");
+
+  out.println("</BODY><HTML>");
+  out.close();
+  System.out.println("In the doGet method ");
+}
+}
+
+//
+public class HTMLFormHandler extends HttpServlet {
+
+  public void init (ServletConfig srvCfg) throw ServletException{
+  super.init(srvCfg);
+  }
+  //
+
+  public void doPost(HttpServletRequest req, HttpServletResponse res) 
+                    throws ServletException, IOException {
+
+                      res.setContentType("text/html");
+                      PrintWriter out = res.getWriter();
+
+                      out.println("<HTML><TITLE>HTMLFormHandler</TITLE><BODY>");
+                      out.println("<H2>Servlet API Example - HTMLFormHandler</H2><HR>");
+
+                      out.println("HI <B> " + req.getParameter("firstname") + ",</B><P>");
+                      out.println(" I see you are a <B>" + req.getParameter("title") + "</B><P>");
+                      out.println("And have worked with the following tools:<BR>");
+
+                      String vals[] = (String []) req.getParameterValues("tools");
+                      if(vals != null) {
+                        for(int i = 0; i<vals.length; i++) 
+                          out.println("<B>" + vals[i] + "</B><BR>");
+                      }
+                      else.out.print;n("<B> None </B><BR>");
+
+                      out.println("<HR>");
+                      getReqInfo(req, out);
+
+                      out.println("</BODY></HTML>");
+                      out.close();
+
+                    }
+
+  public void getReqInfo(HttpServletRequest req, PrintWriter out) {
+    throws ServletException, IOException {
+out.println("<H4><B>Additional Request Information:</B></H4>");
+out.println("<B>Request Method:</B> " + req.getMethod() + "<BR>");
+/*
+  // 생략 
+  URI
+  protocol
+  scheme
+  path
+  name
+  port
+  info
+  Translator
+  character Encoding
+  Query string
+  content length
+  content type
+  remote user
+  remote address
+  remote host
+  Authorization scheme*/
+
+      
+      out.println("<B>Request URI:</B> " + req.getRequestURI() + "<BR>");
+      out.println("<B>Request protocol:</B> " + req.getProtocol() + "<BR>");
+      out.println("<B>Request scheme:</B> " + req.getScheme() + "<BR>");
+      out.println("<B>Servlet path:</B> " + req.getServletPath() + "<BR>");
+      out.println("<B>Servlet name:</B> " + req.getServerName() + "<BR>");
+      out.println("<B>Servlet port:</B> " + req.getServerPort() + "<BR>");
+      out.println("<B>Path info:</B> " + req.getPathInfo() + "<BR>");
+      out.println("<B>Path translated:</B> " + req.getPathTranslated() + "<BR>");
+      out.println("<B>Character encoding:</B> "+req.getCharacterEncoding()+ "<BR>");
+      out.println("<B>Query string:</B> " + req.getQueryString() + "<BR>");
+      out.println("<B>Content length:</B> " + req.getContentLength() + "<BR>");
+      out.println("<B>Content type:</B> " + req.getContentType() + "<BR>");
+      out.println("<B>Remote user:</B> " + req.getRemoteUser() + "<BR>");
+      out.println("<B>Remote address:</B> " + req.getRemoteAddr() + "<BR>");
+      out.println("<B>Remote host:</B> " + req.getRemoteHost() + "<BR>");
+      out.println("<B>Authorization scheme:</B> " + req.getAuthType() + "<BR>");
+      }
+      }
+
+  //
+  public class SimpleCounter extends HttpSerlvet {
+
+    private int calledCount;
+
+    public void init(ServletConfig config) throws ServletException {
+      super.init(config);
+      calledCount = 0;
+    }
+
+    protected void service(HttpServletRequest req, HttpServletResponse res)
+        throws ServletException, IOException, IOException {
+
+      res.setContentType("text/html");
+
+      PrintWriter out = res.getWriter();
+      out.println("<HTML><BODY>");
+      out.println("<H2>Servlet API Example - SimpleCounter</H2><HR>");
+      ++calledCount;
+      out.println("<H4>This servlet has been called " + calledCount +
+          " times.</H4>");
+
+      out.println("</BODY><HTML>");
+      out.close();
+    }
+  }
+
+  //
+  public class SimpleInitServlet extends HttpSerlvet {
+
+    protected String mydriver;
+    protected String myurl;
+    protected String myuserID;
+    protected String mypassword;
+
+    public void init(ServletConfig config) throws ServletException {
+
+      super.init(config);
+      mydriver = config.getInitParameter("driver");
+      myurl = config.getInitParameter("URL");
+      myuserID = config.getInitParameter("userID");
+      mypassword = config.getInitParameter("password");
+    }
+
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+    throws ServletException, IOException {
+
+      res.setContentType("TEXT/HTML");
+      PrintWriter out = res.getWriter();
+      out.println("<HTML>");
+      out.println("<TITLE> Date Display</TITLE>");
+      out.println("<BODY>");
+      out.println("<H2>Servlet Initialization Parameters (ServletConfig):
+                                                          </H2><HR>");
+
+      out.println("<B>driver:</B> " + mydriver + "</BR>");
+      out.println("<B>URL:</B> " + myurl + "</BR>"");
+      out.println("<B>password: </B>" + mypassword + "</BR>");
+      out.println("<B>userID:</B> " + myuserID + "</BR>");
+      out.println("</BODY></HTML>");
+      out.close();
+    }
+  }
+  //
+
+  public class CookieServlet extends HttpSerlvet {
+
+    protected void service(HttpServletRequest req, HttpServletResponse res)
+        throws ServletException, IOException {
+
+      int calledCount = 0;
+      res.setContentType("text/html");
+      PrintWriter out = res.getWriter();
+      out.println("<HTML><TITLE>CookiesServlet</TITLE><BODY>");
+      out.println("<H2>Servlet Cookie Example: </H2><HR>");
+      if (getReqCookie(req, out, "calledCount") == null)
+        calledCount = 0;
+      else
+        calledCount = new Integer(getReqCookie(req, out,
+            "calledCount")).intValue();
+      out.print("The value of the cookie calledCount sent in on the request: ");
+
+      if (calledCount == 0)
+        out.println("null - value not sent in on request<HR>");
+      else
+        out.println(calledCount + "<HR>");
+      calledCount++;
+      Cookie cookie = new Cookie("calledCount",
+          new Integer(calledCount).toString());
+
+      res.addCookie(cookie);
+      out.println("The value of the cookie calledCount set on the response: " +
+          calledCount);
+      out.println("</BODY><HTML>");
+      out.close();
+    }
+
+    private String getReqCookie(HttpServletRequest req, PrintWriter out,
+        String name) {
+      Cookie[] cookies = req.getCookies();
+      if (cookies != null && cookies.length > 0) {
+        for (int i = 0; i < cookies.length; i++) {
+          if (cookies[i].getName().equals(name))
+            return (cookies[i].getValue());
+        }
+
+      }
+      return null;
+    }
+  }
+
+  // URL rewriting servlet
+
+  public class URLServlet extends HttpSerlvet {
+
+    protected void service(HttpServletRequest req, HttpServletResponse res)
+    throws ServletException, IOException {
+
+      int calledCount = 0;
+      res.setContentType("text/html");
+    PrintWriter out = res.getWriter();
+      out.println("<HTMl><TITLE> URLServlet</TITLE> <BODY>");
+      out.println("<H2 >Servlet URL Rewriting Example: </H2><HR>");
+      calledCount = getReqURLInt(req, "calledCount");
+
+
+      out.println("The value of the url-parm calledCount received in the 
+                  request:");
+
+      if(calledCount ==0) out.println("null = value not received <HR>");
+      else out.println(calledCount + "<HR>");
+      calledCount++;
+      out.println("The value of the url-parm calledCount sent back: " +
+                 calledCount);
+
+      out.print("<HR><P><A HREF=\ itso.servjsp.servletapi.URLServlet");
+      out.print("?calledCount=" + calledCount + 
+                "\"> Click to reload<\A>);
+      out.println("</BODY></HTML>");
+      out.close();
+
+    }
+
+    public int getReqURLInt(HttpServletRequest req, String name) {
+      int val = 0;
+      if (req.getParameter(name) != null)
+        val = new Integer(req.getParameter(name)).intValue();
+      return val;
+    }
+  }
+
+  //
+  public class PersistentCounter extends HttpSerlvet {
+
+    private int calledCount;
+    private SaveServletStats stats;
+    private String filename;
+
+    public void init (ServletConfig config) throws ServletException {
+      super.init(config);
+      calledCount = 0;
+      filename = config.getInitParameter("filename");
+      stats = new SaveServletStats();
+      if(filename != null){
+        try(ObjectInputStream in = new ObjectInputStream(
+          new FileInputStream(filename + ".ser")); 
+
+            stats = (SaveServletStats)in.readObject();
+in.close();}
+        catch(Exception e)
+{e.printStackTrace();
+        }
+      }
+
+  public void doGet(HttpServletRequest req, HttpServletResponse res)
+      throws ServletException, IOException {
+res.setContentType("TEXT/HTML");
+PrintWriter out = res.getWriter();
+calledCount++;
+out.println("<HTML><TITLE>PersistentCounter</TITLE><BODY>");
+out.println("<H4>This servlet has been called:  </H4><BR>");
+out.println("<B>" + calledCount + " times.</B>times since the servlet was loaded
+            THIS servlet life-cycle session<BR>");
+
+out.println("<B>" + stats.calledCount + "</B>"times since the servlet was 
+loaded ALL servlet life-cycle sessions<BR>");
+
+            out.println("</BODY></HTML>");
+            stats.calledCount++;
+            synchronized(this){
+            if(filename != null){
+            ObjectOutputStream outstats = new ObjecetOutputStream(
+              new FileOutputStream(filename + ".ser"));
+
+            outstats.writeObject(stats);
+            System.out.println("Saving stats file: " + stats.calledCount);
+outstats.close();}}
+out.close();
+
+            }
+
+  }
+  //
+
+  public class UserSessionCounter extends HttpSerlvet {
+    private int calledCount;
+
+    public void init(ServletConfig config) throws ServletException {
+      super.init(config);
+      calledCount = 0;
+    }
+
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+          throws ServerCloneException, IOException  {
+
+          res.setContentType("TEXT/HTML");
+          PrintWriter out = res.getWriter();
+
+          HttpSession session =req.getSession(true);
+          if(session.isNew() || session.getValue("usersession") == null){
+            session.putValue("usersession", new SaveServletStats());
+            
+          }
+          SaveServletStats ustats = 
+            (SaveServletStats)session.getValue("usersession");
+          calledCount++;
+          ustats.calledCount++;
+          out.println("<HTML><TITLE>SessionCounter</TITLE><BODY>");
+          out.println("<H4>This servlet has been called:  </H4><BR>");
+          out.println("<B> " + calledCount + "</B>times since the servlet was loaded
+            THIS servlet life-cycle session<BR>");
+
+          out.println("<B>" + ustats.calledCount + "</B>times since the servlet was
+            loaded by this user<BR>");
+          out.println("</BODY></HTML>");
+          out.close();
+
+        }
+
+  }
+
+  //
+  public class JDBCInitServlet extends SimpleInitServlet {
+    protected Conection conn = null;
+
+    public void init(ServletConfig config) throws ServletException {
+      super.init(config);
+      try {
+
+        Class.forName(mydriver).newInstance();
+        conn = DriverManager.getConnection(myurl, myuserID, mypassword);
+        System.out.println("Connection successful..");
+        ;
+
+      } catch (SQLException se) {
+        System.out.println(se);
+      } catch (Exception e) {
+        e.printStacktrace();
+      }
+    }
+
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+        throws ServletException, IOException {
+
+      res.setContentType("TEXT/HTML");
+      PrintWriter out = res.getWriter();
+      out.println("<HTML>");
+      out.println("<TITLE>JDBC Init Connection</TITLE>");
+      out.println("<BODY>");
+      try {
+        executeSQL(out);
+      } catch (SQLException se) {
+        se.printStackTrace();
+      }
+      out.println("</BODY></HTML>");
+      out.close();
+
+    }
+
+    //
+    public void executeSQL(PrintWriter out) throws SQLException {
+      Statement stmt = conn.createStatement();
+      String sql = "SELECT*FROM DEPARTMENT";
+      stmt.executeQuery(sql);
+      ResultSet rs = stmt.getResultSet();
+      int count = 1;
+      while (rs.next()) {
+        out.println("<B>" + rs.getString("DEPTNAME") + "</B><BR><BLOCKQUOTE>");
+        String sql2 = "SELECT*FROM EMPLOYEE WHERE WORKDEPT = '" +
+            rs.getString("DEPTNO") + "'";
+        Statement stmt2 = conn.createStatement();
+        stmt2.executeQuery(sql2);
+        ResultSet rs2 = stmt2.getResultSet();
+        while (rs2.next()) {
+          out.println(rs2.getString("FIRSTNME") + " " +
+              rs2.getString("LASTNAME") + "<br>");
+        }
+        out.println("</BLOCKQUOTE>");
+      }
+    }
+}
+// Servlet tag with SHTML
+
+<HTML><BODY><H2>
+
+Start of
+SHTML Servlet Example,
+the following
+lines are
+from the servlet:</H2><HR><
+SERVLET name = "SHTMLServlet"CODE="itso.servjsp.servletapi.SHTMLServlet"></SERVLET><HR><H2>
+END of
+servlet include</H2?</HTML></BODY>
+
+//
+    public class SHTMLServlet extends HttpServlet {
+
+  public vodi service(HttpServletRequest req, HttpServletResponse res)
+  throws ServletException, IOException {
+
+    PrintWriter out = res.getWriter();
+    out.println("<HR><H4>Servlet API Example - SHTMLServlet</H4>");
+
+    out.println("<H4>Basic included servlet ... </H4><HR>");
+  }
+}
+    //
+    public class FilterSecond extends HttpServlet{
+
+      protected void service(HttpServletRequest req, HttpServletResponse res)
+      throws ServletException, IOException {
+
+        res.setContentType("text/html");
+        PrintWriter out = res.getWriter();
+
+        BufferedReader in = req.getReader();
+        String line;
+        out.println("<HTML><BODY>");
+        while(line = in.readLine()) != null)
+
+          out.println("<H4> <font color=\"Green\">This part of the output produced
+          by the second filter servlet..</H4>");
+        out.println("</BODY></HTML>");
+        out.close();
+      }
+
+      
+      
+      }
+//77P SG245755.book
